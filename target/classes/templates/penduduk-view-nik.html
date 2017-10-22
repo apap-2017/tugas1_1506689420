@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Lihat Data Penduduk</title>
+</head>
+<body>
+<div class="container">
+<div th:replace="fragments/fragment :: header"></div>
+<div class="container">
+	
+	<div class="row">
+		<div class="col">
+			<br/>
+			<h3 class="float-left" th:text="'Lihat Data Penduduk - ' + ${nomor}">Lihat Data Penduduk - nomor</h3>
+			<div class="btn-group float-right">
+				<a th:href="'/penduduk/ubah/'+${penduduk.nik}" class="btn btn-success">Ubah</a>
+				<a th:href="@{'/keluarga'(nkk=${penduduk.keluarga.nomor_kk})}" class="btn btn-success">Keluarga</a>
+				<a class="btn btn-success" th:href="@{'/penduduk/cari'(kt=${penduduk.keluarga.kelurahan.kecamatan.kota.id}, kc=${penduduk.keluarga.kelurahan.kecamatan.id}, kl=${penduduk.keluarga.kelurahan.id})}">Kelurahan</a>
+				<form method="post" action="/penduduk/mati">
+					<input type="hidden" name="nik" th:value="${penduduk.nik}"/>
+					<input type="submit" th:disabled="${penduduk.is_wafat}" value="Nonaktifkan" class="btn btn-danger"/>
+				</form>
+			</div>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>NIK</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.nik}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Nama</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.nama}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Tempat/Tanggal Lahir</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.tempat_lahir} + ', ' + ${#dates.format(penduduk.tanggal_lahir, 'dd-MM-yyyy')}" >
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Alamat</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.keluarga.alamat}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>RT/RW</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.keluarga.rt} + '/' + ${penduduk.keluarga.rw}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Kelurahan/Desa</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.keluarga.kelurahan.nama_kelurahan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Kecamatan</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.keluarga.kelurahan.kecamatan.nama_kecamatan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Kota</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.keluarga.kelurahan.kecamatan.kota.nama_kota}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Golongan Darah</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.golongan_darah}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Status Perkawinan</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.status_perkawinan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Pekerjaan</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.pekerjaan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Kewarganegaraan</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.is_wni}?'WNI':'WNA'">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+		<strong>Status Kematian</strong>
+		</div>
+		<div class="col-sm-6" th:text="${penduduk.is_wafat}?'Wafat':'Hidup'">
+		</div>
+	</div>
+	
+</div>
+</div>
+</body>
+</html>

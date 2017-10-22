@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Cari Penduduk</title>
+
+<style type="text/css">
+.hidden {
+display: none; 
+}
+</style>
+</head>
+<body>
+<div class="container">
+	<div th:replace="fragments/fragment :: header"></div>
+	
+	<div class="row">
+		<div class="col">
+			<h1>Cari Penduduk</h1>
+			<form method="get" action="/penduduk/cari">
+			<!-- drop down -->
+			<div class="form-group">
+				<label for="kt">Kota</label><br/>
+				<select class="form-control" name="kt" th:readonly="${skota}">
+					<option th:if="${skota}" th:text="${skota.nama_kota}" th:value="${skota.id}" selected="selected"></option>
+					<option th:unless="${skota}" th:each="kota,iterationStatus:${kotas}" th:text="${kota.nama_kota}" th:value="${kota.id}"></option>
+				</select>
+			</div>
+			
+			<div th:if="${skota}" class="form-group">
+				<label for="kc">Kecamatan</label><br/>
+				<select class="form-control" name="kc" th:readonly="${skecamatan}">
+					<option th:if="${skecamatan}" th:text="${skecamatan.nama_kecamatan}" th:value="${skecamatan.id}" selected="selected"></option>
+					<option th:each="kecamatan,iterationStatus:${kecamatans}" th:if="${kecamatan.id_kota}==${skota.id}" th:text="${kecamatan.nama_kecamatan}" th:value="${kecamatan.id}"></option>
+				</select>
+			</div>
+			
+			<div th:if="${skecamatan}" class="form-group">
+				<label for="kl">Kelurahan</label><br/>
+				<select class="form-control" name="kl">
+					<option th:each="kelurahan,iterationStatus:${kelurahans}" th:if="${kelurahan.id_kecamatan}==${skecamatan.id}" th:text="${kelurahan.nama_kelurahan}" th:value="${kelurahan.id}"></option>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<input type="submit" value="Lihat" class="btn btn-primary" />
+			</div>
+			
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

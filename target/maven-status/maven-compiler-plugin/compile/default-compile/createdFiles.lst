@@ -1,0 +1,11 @@
+com/example/dao/SidukMapper.class
+com/example/service/SidukService.class
+com/example/controller/KeluargaController.class
+com/example/model/KeluargaModel.class
+com/example/model/PendudukModel.class
+com/example/ApapTugas1Application.class
+com/example/model/KecamatanModel.class
+com/example/model/KotaModel.class
+com/example/controller/PendudukController.class
+com/example/service/SidukServiceDatabase.class
+com/example/model/KelurahanModel.class

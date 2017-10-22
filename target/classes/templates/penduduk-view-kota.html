@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Cari Penduduk</title>
+
+<style type="text/css">
+.hidden {
+display: none; 
+}
+</style>
+</head>
+<body>
+<div class="container">
+	<div th:replace="fragments/fragment :: header"></div>
+	
+	<div class="row">
+		<div class="col">
+			<br/>
+			<h1>Cari Penduduk</h1>
+			<div th:text="'Lihat Data Penduduk Di Kota '+${skota}+', Kecamatan '+${skecamatan}+', Kelurahan '+${skelurahan}"></div>
+			<hr/>
+			
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="row">
+						<div class="col-sm-12">Penduduk Termuda</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">NIK</div>
+						<div class="col-sm-6" th:text="${termuda?.nik}"></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Nama</div>
+						<div class="col-sm-6">
+							<a th:href="@{'/penduduk'(nik=${termuda?.nik})}" th:text="${termuda?.nama}"></a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Tanggal Lahir</div>
+						<div class="col-sm-6" th:text="${termuda?.tanggal_lahir}?${#dates.format(termuda?.tanggal_lahir, 'dd-MM-yyyy')}"></div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+				<div class="row">
+						<div class="col-sm-12">Penduduk Tertua</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">NIK</div>
+						<div class="col-sm-6" th:text="${tertua?.nik}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Nama</div>
+						<div class="col-sm-6">
+							<a th:href="@{'/penduduk'(nik=${tertua?.nik})}" th:text="${tertua?.nama}"></a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">Tanggal Lahir</div>
+						<div class="col-sm-6" th:text="${termuda?.tanggal_lahir}?${#dates.format(tertua?.tanggal_lahir, 'dd-MM-yyyy')}"></div>
+					</div>
+				</div>
+				<hr/>
+			</div>
+			
+			<hr/>
+			
+			<table id="table">
+				<thead>
+					<tr>
+					<th>NIK</th>
+					<th>Nama</th>
+					<th>Kenis Kelamin</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr th:each="penduduk,iterationStatus:${penduduks}">
+					<td th:text="${penduduk.nik}"></td>
+					<td><a th:href="@{'/penduduk'(nik=${penduduk.nik})}" th:text="${penduduk.nama}"></a></td>
+					<td th:text="${penduduk.jenis_kelamin}?'Perempuan':'Laki-Laki'"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#table").DataTable();
+});
+</script>
+
+</body>
+</html>

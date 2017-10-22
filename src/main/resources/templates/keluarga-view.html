@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Lihat Data Keluarga</title>
+<link href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"
+	rel="stylesheet" />
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+<div class="container">
+	<div th:replace="fragments/fragment :: header"></div>
+	<div class="row">
+		<div class="col">
+		<br/>
+			<h3 class="float-left" th:text="'Lihat Data Berdasarkan Kartu Keluarga - ' + ${nomor}">Lihat Data Berdasarkan Kartu Keluarga 
+			- nomor</h3>
+			<div class="btn-group float-right">
+				<a th:href="'/keluarga/ubah/'+${keluarga.nomor_kk}" class="btn btn-success">Ubah</a>
+			</div>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>NKK</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.nomor_kk}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>Alamat</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.alamat}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>RT/RW</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.rt} + '/' + ${keluarga.rw}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>Kelurahan/Desa</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.kelurahan.nama_kelurahan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>Kecamatan</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.kelurahan.kecamatan.nama_kecamatan}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>Kota</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.kelurahan.kecamatan.kota.nama_kota}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+		<strong>Status Kartu</strong>
+		</div>
+		<div class="col-sm-8" th:text="${keluarga.is_tidak_berlaku}?'Nonaktif':'Aktif'">
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<table id="table">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>Nama Lengkap</th>
+				<th>NIK</th>
+				<th>Jelis Kelamin</th>
+				<th>Tempat Lahir</th>
+				<th>Tanggal Lahir</th>
+				<th>Agama</th>
+				<th>Pekerjaan</th>
+				<th>Status Perkawinan</th>
+				<th>Status dalam Keluarga</th>
+				<th>Kewarganegaraan</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="penduduk,iterationStatus: ${keluarga.penduduk}">
+				<td th:text="${iterationStatus.count}"></td>
+				<td><a th:href="@{'/penduduk'(nik=${penduduk.nik})}" th:text="${penduduk.nama}"></a></td>
+				<td th:text="${penduduk.nik}"></td>
+				<td th:text="${penduduk.jenis_kelamin}?'Perempuan':'Laki-laki'"></td>
+				<td th:text="${penduduk.tempat_lahir}"></td>
+				<td th:text="${#dates.format(penduduk.tanggal_lahir, 'dd-MM-yyyy')}"></td>
+				<td th:text="${penduduk.agama}"></td>
+				<td th:text="${penduduk.pekerjaan}"></td>
+				<td th:text="${penduduk.status_perkawinan}"></td>
+				<td th:text="${penduduk.status_dalam_keluarga}"></td>
+				<td th:text="${penduduk.is_wni}?'WNI':'WNA'"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#table').DataTable();
+	});
+	</script>
+	
+</div>
+</body>
+</html>

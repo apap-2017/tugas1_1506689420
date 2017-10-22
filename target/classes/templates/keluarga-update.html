@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Ubah Keluarga</title>
+
+<style type="text/css">
+.hidden {
+display: none; 
+}
+</style>
+</head>
+<body>
+<div class="container">
+	<div th:replace="fragments/fragment :: header"></div>
+	
+	<div class="row">
+		<div class="col">
+			<h1>Ubah Keluarga</h1>
+			<form method="post" th:action="'/keluarga/ubah/'+${keluarga.nomor_kk}" th:object="${keluarga}">
+			<div class="form-group">
+				<label for="alamat">Alamat</label><br/>
+				<input name="alamat" type="text" class="form-control" th:value="${keluarga.alamat}" th:field="*{alamat}"/>
+			</div>
+			<div class="form-group">
+				<label for="rt">RT</label><br/>
+				<input name="rt" type="text" class="form-control" th:value="${keluarga.rt}" th:field="*{rt}"/>
+			</div>
+			<div class="form-group">
+				<label for="rw">RW</label><br/>
+				<input name="rw" type="text" class="form-control" th:value="${keluarga.rw}" th:field="*{rw}"/>
+			</div>
+			<!-- drop down -->
+			<div class="form-group">
+				<label for="kota">Kota</label><br/>
+				<select class="form-control" name="kota" onchange="optionsKecamatan(this.value)" th:value="${keluarga.kelurahan.kecamatan.id_kota}">
+				<option value="" disabled="disabled"></option>
+				<option th:each="kota,iterationStatus:${kotas}" th:text="${kota.nama_kota}" th:value="${kota.id}"></option>
+				</select>
+			</div>
+			
+			<div class="form-group" id="kecamatanList">
+				<label for="kecamatan">Kecamatan</label><br/>
+				<select class="form-control" name="kecamatan" onchange="optionsKelurahan(this.value)" th:value="${keluarga.kelurahan.id_kecamatan}">
+				<option value="0" disabled="disabled"></option>
+				<option th:each="kecamatan,iterationStatus:${kecamatans}" th:text="${kecamatan.nama_kecamatan}" th:value="${kecamatan.id}" th:attr="kota=${kecamatan.id_kota}"></option>
+				</select>
+			</div>
+			
+			<div class="form-group" id="kelurahanList">
+				<label for="id_kelurahan">Kelurahan</label><br/>
+				<select class="form-control" name="id_kelurahan" onchange="enableSubmit()" th:field="*{id_kelurahan}">
+				<option value="0" disabled="disabled" th:value="${keluarga.id_kelurahan}"></option>
+				<option th:each="kelurahan,iterationStatus:${kelurahans}" th:text="${kelurahan.nama_kelurahan}" th:value="${kelurahan.id}" th:attr="kecamatan=${kelurahan.id_kecamatan}"></option>
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<input type="submit" value="Ubah" class="btn btn-primary" />
+			</div>
+			
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function optionsKecamatan(value) {
+	$('#kecamatanList select').val("0");
+	$('#kelurahanList select').val("0");
+	$('option[kota]').hide();
+	$('option[kota*=\''+value+'\']').show();
+	$('#submitButton').prop('disabled', true);
+}
+
+function optionsKelurahan(value) {
+	$('#kelurahanList select').val("0");
+	$('option[kecamatan]').hide();
+	$('option[kecamatan*=\''+value+'\']').show();
+	$('#submitButton').prop('disabled', true);
+}
+
+function enableSubmit(){
+	$('#submitButton').prop('disabled', false);
+}
+</script>
+
+</body>
+</html>

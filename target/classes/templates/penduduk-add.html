@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/fragment :: head">
+<title id="pageTitle">Tambah Penduduk</title>
+</head>
+<body>
+<div class="container">
+	<div th:replace="fragments/fragment :: header"></div>
+	
+	<div class="row">
+		<div class="col">
+			<h1>Tambah Penduduk</h1>
+			<form method="post" action="/penduduk/tambah" th:action="@{/penduduk/tambah}" th:object="${pendudukModel}">
+			<div class="form-group">
+				<label for="nama">Masukkan Nama</label><br/>
+				<input name="nama" type="text" class="form-control" th:field="*{nama}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('nama')}" th:errors="*{nama}"></div>
+			</div>
+			<div class="form-group">
+				<label for="tempat_lahir">Tempat Lahir</label><br/>
+				<input name="tempat_lahir" type="text" class="form-control" th:field="*{tempat_lahir}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('tempat_lahir')}" th:errors="*{tempat_lahir}"></div>
+			</div>
+			<div class="form-group">
+				<label for="tanggal_lahir">Tanggal Lahir</label><br/>
+				<input name="tanggal_lahir" type="date" class="form-control" th:field="*{tanggal_lahir}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('tanggal_lahir')}" th:errors="*{tanggal_lahir}"></div>
+			</div>
+			<div class="form-group">
+				<label for="jenis_kelamin">Jenis Kelamin</label><br/>
+				<select name="jenis_kelamin" class="form-control" th:field="*{jenis_kelamin}" th:errorclass="is-invalid">
+					<option value="0">Laki-Laki</option>
+					<option value="1">Perempuan</option>
+				</select>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('jenis_kelamin')}" th:errors="*{jenis_kelamin}"></div>
+			</div>
+			<!-- drop down -->
+			<div class="form-group">
+				<label for="golongan_darah">Golongan Darah</label><br/>
+				<select class="form-control" name="golongan_darah" th:field="*{golongan_darah}" th:errorclass="is-invalid">
+				<option value="" selected="selected" disabled="disabled"></option>
+				<option value="A+">A+</option>
+				<option value="A-">A-</option>
+				<option value="B+">B+</option>
+				<option value="B-">B-</option>
+				<option value="AB+">AB+</option>
+				<option value="AB-">AB-</option>
+				<option value="O+">O+</option>
+				<option value="O-">O-</option>
+				</select>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('golongan_darah')}" th:errors="*{golongan_darah}"></div>
+			</div>
+			<div class="form-group">
+				<label for="agama">Agama</label><br/>
+				<input name="agama" type="text" class="form-control" th:field="*{agama}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('agama')}" th:errors="*{agama}"></div>
+			</div>
+			<!-- Drop down -->
+			<div class="form-group">
+				<label for="status_perkawinan">Status Perkawinan</label><br/>
+				<select class="form-control" name="status_perkawinan" th:field="*{status_perkawinan}" th:errorclass="is-invalid">
+				<option value="" selected="selected" disabled="disabled"></option>
+				<option value="Belum Kawin">Belum Kawin</option>
+				<option value="Kawin">Kawin</option>
+				<option value="Cerai Hidup">Cerai Hidup</option>
+				<option value="Cerai Mati">Cerai Mati</option>
+				</select>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('status_perkawinan')}" th:errors="*{status_perkawinan}"></div>
+			</div>
+			<div class="form-group">
+				<label for="status_dalam_keluarga">Status dalam keluarga</label><br/>
+				<input name="status_dalam_keluarga" type="text" class="form-control" th:field="*{status_dalam_keluarga}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('status_dalam_keluarga')}" th:errors="*{status_dalam_keluarga}"></div>
+			</div>
+			<div class="form-group">
+				<label for="pekerjaan">Pekerjaan</label><br/>
+				<input name="pekerjaan" type="text" class="form-control" th:field="*{pekerjaan}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('pekerjaan')}" th:errors="*{pekerjaan}"></div>
+			</div>
+			<div class="form-group">
+				<label for="is_wni">Kewarganegaraan</label><br/>
+				<select class="form-control" name="is_wni" th:field="*{is_wni}" th:errorclass="is-invalid">
+					<option value="" selected="selected" disabled="disabled"></option>
+					<option value="1">WNI</option>
+					<option value="0">WNA</option>
+				</select>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('is_wni')}" th:errors="*{is_wni}"></div>
+			</div>
+			<!-- dropdown-->
+			<div class="form-group">
+				<label for="is_wafat">Status Kematian</label><br/>
+				<select class="form-control" name="is_wafat" th:field="*{is_wafat}" th:errorclass="is-invalid">
+				<option value="" selected="selected" disabled="disabled"></option>
+				<option value="0">Hidup</option>
+				<option value="1">Mati</option>
+				</select>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('is_wafat')}" th:errors="*{is_wafat}"></div>
+			</div>
+			<div class="form-group">
+				<label for="id_keluarga">Id Keluarga</label><br/>
+				<input name="id_keluarga" type="text" class="form-control" th:field="*{id_keluarga}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:if="${#fields.hasErrors('id_keluarga')}" th:errors="*{id_keluarga}"></div>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Tambah" class="btn btn-primary" />
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>
